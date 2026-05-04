@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon/home_screen.dart';
+import 'package:pokemon/dashboard_screen.dart';
 
 void main() {
-  runApp(const SilphApp());
+  runApp(const SilphPokemonApp());
 }
 
-class SilphApp extends StatelessWidget {
-  const SilphApp({super.key});
+class SilphPokemonApp extends StatelessWidget {
+  const SilphPokemonApp({super.key});
 
   @override
   Widget build(BuildContext context) {
