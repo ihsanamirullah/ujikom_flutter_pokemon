@@ -45,12 +45,11 @@ class DashboardScreen extends StatelessWidget {
                     style: TextStyle(color: Color(0xFFC00000)),
                   ),
                   TextSpan(text: "about your "),
-                  TextSpan(text: "Pokemon"),
                 ],
               ),
             ),
             const SizedBox(height: 12),
-            // Image.asset('assets/pokemon_logo.png', height: 60),
+            Image.asset('assets/pokemon_logo.png', width: 300,),
             const SizedBox(height: 24),
             // SEARCH BAR REDIRECT
             Container(

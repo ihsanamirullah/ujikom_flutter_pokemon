@@ -12,7 +12,7 @@ class SilphPokemonApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Silph Pokemon Database - Muhammad Ihsan Amirullah - Kelas 9Dgit --version',
+      title: 'Silph Pokemon Database - Muhammad Ihsan Amirullah - Kelas 9D',
       theme: ThemeData(
         primaryColor: const Color(0xFFC00000),
         useMaterial3: true,
