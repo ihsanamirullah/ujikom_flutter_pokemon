@@ -13,8 +13,16 @@ class DashboardScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: const Color(0xFFC00000),
-        title: const Text("Silph Pokemon Database", style: TextStyle(color: Colors.white, fontSize: 16)),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.menu, color: Colors.white))],
+        title: const Text(
+          "Silph Pokemon Database",
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.menu, color: Colors.white),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -25,45 +33,83 @@ class DashboardScreen extends StatelessWidget {
             const SizedBox(height: 8),
             RichText(
               text: const TextSpan(
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
                 children: [
                   TextSpan(text: "Let's find "),
-                  TextSpan(text: "information ", style: TextStyle(color: Color(0xFFC00000))),
-                  TextSpan(text: "about your"),
+                  TextSpan(
+                    text: "information ",
+                    style: TextStyle(color: Color(0xFFC00000)),
+                  ),
+                  TextSpan(text: "about your "),
+                  TextSpan(text: "Pokemon"),
                 ],
               ),
             ),
+            const SizedBox(height: 12),
+            // Image.asset('assets/pokemon_logo.png', height: 60),
+            const SizedBox(height: 24),
+            // SEARCH BAR REDIRECT
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: TextField(
+                onSubmitted: (value) {
+                  if (value.isNotEmpty) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ListScreen(initialQuery: value),
+                      ),
+                    );
+                  }
+                },
+                decoration: const InputDecoration(
+                  hintText: "Search your Pokemon",
+                  prefixIcon: Icon(Icons.search),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
             const SizedBox(height: 32),
-            const Text("Popular Pokemon", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+            const Text(
+              "Popular Pokemon",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
             const SizedBox(height: 16),
             SizedBox(
               height: 240,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 4, // Tampilkan beberapa saja di dashboard
-                itemBuilder: (context, index) => PokemonCard(pokemon: allPokemon[index]),
+                itemCount: allPokemon.length > 4 ? 4 : allPokemon.length,
+                itemBuilder: (context, index) =>
+                    PokemonCard(pokemon: allPokemon[index]),
               ),
             ),
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ListScreen())),
-                style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFC00000), foregroundColor: Colors.white),
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ListScreen()),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFC00000),
+                  foregroundColor: Colors.white,
+                ),
                 child: const Text("See more"),
               ),
-            )
+            ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildSearchBar() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(30)),
-      child: const TextField(decoration: InputDecoration(hintText: "Search your Pokemon", prefixIcon: Icon(Icons.search), border: InputBorder.none)),
     );
   }
 }
@@ -75,31 +121,42 @@ class PokemonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(pokemon: pokemon))),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DetailScreen(pokemon: pokemon)),
+      ),
       child: Container(
         width: 170,
         margin: const EdgeInsets.only(right: 16, bottom: 8),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8, offset: const Offset(0, 4))],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Column(
           children: [
             Expanded(
               child: Container(
                 width: double.infinity,
-                decoration: BoxDecoration(color: getPokemonColor(pokemon.type).withOpacity(0.2), borderRadius: const BorderRadius.vertical(top: Radius.circular(20))),
+                decoration: BoxDecoration(
+                  color: getPokemonColor(pokemon.type).withOpacity(0.2),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(20),
+                  ),
+                ),
                 child: Hero(
-  tag: pokemon.name,
-  child: Padding(
-    padding: const EdgeInsets.all(12), // Pindahkan padding ke sini
-    child: Image.asset(
-      pokemon.imagePath,
-      fit: BoxFit.contain,
-    ),
-  ),
-),
+                  tag: pokemon.name,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Image.asset(pokemon.imagePath, fit: BoxFit.contain),
+                  ),
+                ),
               ),
             ),
             Padding(
@@ -107,16 +164,35 @@ class PokemonCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(pokemon.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  Text(
+                    pokemon.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
                   const SizedBox(height: 4),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(color: getPokemonColor(pokemon.type), borderRadius: BorderRadius.circular(5)),
-                    child: Text(pokemon.type, style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: getPokemonColor(pokemon.type),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      pokemon.type,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
